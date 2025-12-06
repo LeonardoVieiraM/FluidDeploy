@@ -60,7 +60,9 @@ app.use(
       const allowedOrigins = [
         "http://localhost:3000",
         "http://localhost:3001",
-        "https://seusite.com",
+        "https://fluid-deploy.vercel.app",
+        "https://fluid-deploy.vercel.app/",
+        "https://plf-es-2025-2-ti5-0492100-fluid-production.up.railway.app",
       ];
       if (!origin || allowedOrigins.indexOf(origin) !== -1)
         callback(null, true);
