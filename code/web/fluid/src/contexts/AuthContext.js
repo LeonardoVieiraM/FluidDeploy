@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem("token"));
 
-  const API_BASE = "http://localhost:3001/api";
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
   useEffect(() => {
     if (token) {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const verifyToken = async () => {
     try {
-      const response = await fetch(`${API_BASE}/usuarios/me`, {
+      const response = await fetch(`${API_URL}/usuarios/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch(`${API_BASE}/usuarios/login`, {
+      const response = await fetch(`${API_URL}/usuarios/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
         idiomaPadrao: "pt-BR",
       };
 
-      const response = await fetch(`${API_BASE}/usuarios/cadastrar`, {
+      const response = await fetch(`${API_URL}/usuarios/cadastrar`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (profileData) => {
     try {
-      const response = await fetch(`${API_BASE}/usuarios/me`, {
+      const response = await fetch(`${API_URL}/usuarios/me`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
