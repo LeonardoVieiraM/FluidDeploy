@@ -18,7 +18,7 @@ class WebSocketClient {
     this.connecting = true;
     this.connectionPromise = new Promise((resolve, reject) => {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${protocol}//localhost:3001/ws`;
+      const wsUrl = process.env.REACT_APP_WS_URL || "ws://localhost:3001/ws";
 
       this.ws = new WebSocket(wsUrl);
       this.ws.onopen = () => {
