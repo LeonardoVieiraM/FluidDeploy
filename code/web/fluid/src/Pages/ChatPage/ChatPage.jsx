@@ -19,7 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-const API_BASE = "http://localhost:3001/api";
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 const ChatMessage = React.memo(
   ({ message, user: currentUser, activeConversation }) => {
@@ -75,7 +75,7 @@ const ChatMessage = React.memo(
       const first = atts[0];
 
       if (first?.fileId) {
-        return `${API_BASE}/uploads/${first.fileId}`;
+        return `${API_URL}/uploads/${first.fileId}`;
       }
 
       if (first?.url) {
@@ -458,13 +458,13 @@ const ChatPage = () => {
       if (!isGroup) return null;
 
       if (conversation.otherUser?.profileImageId) {
-        return `${API_BASE}/uploads/${
+        return `${API_URL}/uploads/${
           conversation.otherUser.profileImageId
         }?t=${Date.now()}`;
       }
 
       if (conversation.otherUser?.imagemPerfil?.id) {
-        return `${API_BASE}/uploads/${
+        return `${API_URL}/uploads/${
           conversation.otherUser.imagemPerfil.id
         }?t=${Date.now()}`;
       }
@@ -474,7 +474,7 @@ const ChatPage = () => {
         if (url.startsWith("http")) {
           return url;
         }
-        return `${API_BASE}${url}?t=${Date.now()}`;
+        return `${API_URL}${url}?t=${Date.now()}`;
       }
 
       // Fallback para imagem padrão de grupo
@@ -855,7 +855,7 @@ const ChatPage = () => {
           formData.append("image", groupProfileImage);
 
           try {
-            const uploadRes = await fetch(`${API_BASE}/uploads/group-profile`, {
+            const uploadRes = await fetch(`${API_URL}/uploads/group-profile`, {
               method: "POST",
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -895,7 +895,7 @@ const ChatPage = () => {
           if (createdConvo.profileImageId) {
             imagemPerfil = {
               id: createdConvo.profileImageId,
-              url: `${API_BASE}/uploads/${createdConvo.profileImageId}`,
+              url: `${API_URL}/uploads/${createdConvo.profileImageId}`,
             };
           }
 
@@ -1163,13 +1163,13 @@ const ChatPage = () => {
                     let groupImageUrl = null;
 
                     if (activeConversation?.otherUser?.profileImageId) {
-                      groupImageUrl = `${API_BASE}/uploads/${
+                      groupImageUrl = `${API_URL}/uploads/${
                         activeConversation.otherUser.profileImageId
                       }?t=${Date.now()}`;
                     } else if (
                       activeConversation?.otherUser?.imagemPerfil?.id
                     ) {
-                      groupImageUrl = `${API_BASE}/uploads/${
+                      groupImageUrl = `${API_URL}/uploads/${
                         activeConversation.otherUser.imagemPerfil.id
                       }?t=${Date.now()}`;
                     } else if (
@@ -1178,7 +1178,7 @@ const ChatPage = () => {
                       const url = activeConversation.otherUser.imagemPerfil.url;
                       groupImageUrl = url.startsWith("http")
                         ? url
-                        : `${API_BASE}${url}?t=${Date.now()}`;
+                        : `${API_URL}${url}?t=${Date.now()}`;
                     } else if (
                       activeConversation?.otherUser?.imagemPerfil === 'default-group'
                     ) {
