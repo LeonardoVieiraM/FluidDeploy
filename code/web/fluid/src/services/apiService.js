@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3001/api";
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 class ApiService {
   getContactImageUrl(contactId) {
@@ -8,12 +8,12 @@ class ApiService {
       return this.getDefaultGroupImageUrl();
     }
     const timestamp = Date.now();
-    return `${API_BASE}/usuarios/${contactId}/imagem-perfil?t=${timestamp}`;
+    return `${API_URL}/usuarios/${contactId}/imagem-perfil?t=${timestamp}`;
   }
 
   getDefaultGroupImageUrl() {
     const timestamp = Date.now();
-    return `${API_BASE}/conversas/default-group-image?t=${timestamp}`;
+    return `${API_URL}/conversas/default-group-image?t=${timestamp}`;
   }
   constructor() {
     this.token = localStorage.getItem("token");
@@ -62,23 +62,23 @@ class ApiService {
     const timestamp = Date.now();
 
     if (type === "profile") {
-      return `${API_BASE}/usuarios/${fileId}/imagem-perfil?t=${timestamp}`;
+      return `${API_URL}/usuarios/${fileId}/imagem-perfil?t=${timestamp}`;
     } else if (type === "chat") {
-      return `${API_BASE}/uploads/${fileId}?t=${timestamp}`;
+      return `${API_URL}/uploads/${fileId}?t=${timestamp}`;
     }
 
     return null;
   }
 
   async getProfile() {
-    const r = await fetch(`${API_BASE}/usuarios/me`, {
+    const r = await fetch(`${API_URL}/usuarios/me`, {
       headers: this.getHeaders(),
     });
     return this.handleResponse(r);
   }
 
   async updateProfile(profileData) {
-    const r = await fetch(`${API_BASE}/usuarios/me`, {
+    const r = await fetch(`${API_URL}/usuarios/me`, {
       method: "PUT",
       headers: this.getHeaders(),
       body: JSON.stringify(profileData),
@@ -87,7 +87,7 @@ class ApiService {
   }
 
   async updateUserStatus(userId, status) {
-    const r = await fetch(`${API_BASE}/usuarios/${userId}/status`, {
+    const r = await fetch(`${API_URL}/usuarios/${userId}/status`, {
       method: "PUT",
       headers: this.getHeaders(),
       body: JSON.stringify({ status }),
@@ -97,7 +97,7 @@ class ApiService {
 
   async updateRecado(mensagemRecado) {
     const userId = this.getUserId();
-    const r = await fetch(`${API_BASE}/usuarios/${userId}/recado`, {
+    const r = await fetch(`${API_URL}/usuarios/${userId}/recado`, {
       method: "PUT",
       headers: this.getHeaders(),
       body: JSON.stringify({ mensagemRecado }),
@@ -106,7 +106,7 @@ class ApiService {
   }
 
   async updateUserIdioma(userId, idioma) {
-    const r = await fetch(`${API_BASE}/usuarios/${userId}/idioma`, {
+    const r = await fetch(`${API_URL}/usuarios/${userId}/idioma`, {
       method: "PUT",
       headers: this.getHeaders(),
       body: JSON.stringify({ idioma }),
@@ -115,7 +115,7 @@ class ApiService {
   }
 
   async updateUserSenha(userId, senhaAtual, novaSenha) {
-    const r = await fetch(`${API_BASE}/usuarios/${userId}/senha`, {
+    const r = await fetch(`${API_URL}/usuarios/${userId}/senha`, {
       method: "PUT",
       headers: this.getHeaders(),
       body: JSON.stringify({ senhaAtual, novaSenha }),
@@ -131,7 +131,7 @@ class ApiService {
       const token = localStorage.getItem("token");
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      const r = await fetch(`${API_BASE}/usuarios/me/imagem`, {
+      const r = await fetch(`${API_URL}/usuarios/me/imagem`, {
         method: "POST",
         headers,
         body: form,
@@ -148,7 +148,7 @@ class ApiService {
   }
 
   async getContacts() {
-    const r = await fetch(`${API_BASE}/usuarios/${this.getUserId()}/contatos`, {
+    const r = await fetch(`${API_URL}/usuarios/${this.getUserId()}/contatos`, {
       headers: this.getHeaders(),
     });
     return this.handleResponse(r);
@@ -156,7 +156,7 @@ class ApiService {
 
   async addContact(contactId, apelido = null) {
     const userId = this.getUserId();
-    const r = await fetch(`${API_BASE}/usuarios/${userId}/contatos`, {
+    const r = await fetch(`${API_URL}/usuarios/${userId}/contatos`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({ contatoId: contactId, apelido }),
@@ -166,7 +166,7 @@ class ApiService {
 
   async addContactByEmail(email, apelido = null) {
     const r = await fetch(
-      `${API_BASE}/usuarios/${this.getUserId()}/contatos/por-email`,
+      `${API_URL}/usuarios/${this.getUserId()}/contatos/por-email`,
       {
         method: "POST",
         headers: this.getHeaders(),
@@ -178,7 +178,7 @@ class ApiService {
 
   async addContactByPhone(numeroTelefone, apelido = null) {
     const r = await fetch(
-      `${API_BASE}/usuarios/${this.getUserId()}/contatos/por-telefone`,
+      `${API_URL}/usuarios/${this.getUserId()}/contatos/por-telefone`,
       {
         method: "POST",
         headers: this.getHeaders(),
@@ -190,7 +190,7 @@ class ApiService {
 
   async removeContact(contactId) {
     const r = await fetch(
-      `${API_BASE}/usuarios/${this.getUserId()}/contatos/${contactId}`,
+      `${API_URL}/usuarios/${this.getUserId()}/contatos/${contactId}`,
       { method: "DELETE", headers: this.getHeaders() }
     );
     return this.handleResponse(r);
@@ -198,7 +198,7 @@ class ApiService {
 
   async updateContactNickname(contactId, apelido) {
     const r = await fetch(
-      `${API_BASE}/usuarios/${this.getUserId()}/contatos/${contactId}`,
+      `${API_URL}/usuarios/${this.getUserId()}/contatos/${contactId}`,
       {
         method: "PATCH",
         headers: this.getHeaders(),
@@ -209,7 +209,7 @@ class ApiService {
   }
 
   async sendMessage(recipientId, text, sourceLang = null) {
-    const r = await fetch(`${API_BASE}/mensagens`, {
+    const r = await fetch(`${API_URL}/mensagens`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({
@@ -223,7 +223,7 @@ class ApiService {
 
   async getConversation(otherUserId, limit = 50, offset = 0) {
     const r = await fetch(
-      `${API_BASE}/mensagens/conversa/${otherUserId}?limit=${limit}&offset=${offset}`,
+      `${API_URL}/mensagens/conversa/${otherUserId}?limit=${limit}&offset=${offset}`,
       { headers: this.getHeaders() }
     );
     return this.handleResponse(r);
@@ -232,7 +232,7 @@ class ApiService {
   async getMessagesByConversation(conversationId, limit = 50, offset = 0) {
     const timestamp = new Date().getTime();
     const r = await fetch(
-      `${API_BASE}/conversas/${conversationId}/messages?limit=${limit}&offset=${offset}&_=${timestamp}`,
+      `${API_URL}/conversas/${conversationId}/messages?limit=${limit}&offset=${offset}&_=${timestamp}`,
       {
         headers: this.getHeaders(),
       }
@@ -241,7 +241,7 @@ class ApiService {
   }
 
   async translateText(text, sourceLang, targetLang) {
-    const r = await fetch(`${API_BASE}/translation/translate`, {
+    const r = await fetch(`${API_URL}/translation/translate`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({ text, sourceLang, targetLang }),
@@ -253,7 +253,7 @@ class ApiService {
     conversationId,
     untilMessageId = null
   ) {
-    const r = await fetch(`${API_BASE}/conversas/${conversationId}/read`, {
+    const r = await fetch(`${API_URL}/conversas/${conversationId}/read`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({ untilMessageId }),
@@ -263,7 +263,7 @@ class ApiService {
 
   async markConversationAsRead(otherUserId, untilMessageId = null) {
     const r = await fetch(
-      `${API_BASE}/mensagens/conversa/${otherUserId}/read`,
+      `${API_URL}/mensagens/conversa/${otherUserId}/read`,
       {
         method: "POST",
         headers: this.getHeaders(),
@@ -274,21 +274,21 @@ class ApiService {
   }
 
   async getUnreadCounts() {
-    const r = await fetch(`${API_BASE}/mensagens/nao-lidas`, {
+    const r = await fetch(`${API_URL}/mensagens/nao-lidas`, {
       headers: this.getHeaders(),
     });
     return this.handleResponse(r);
   }
 
   async getConversations(limit = 20) {
-    const r = await fetch(`${API_BASE}/conversas?limit=${limit}`, {
+    const r = await fetch(`${API_URL}/conversas?limit=${limit}`, {
       headers: this.getHeaders(),
     });
     return this.handleResponse(r);
   }
 
   async deleteConversation(conversationId) {
-    const r = await fetch(`${API_BASE}/conversas/${conversationId}`, {
+    const r = await fetch(`${API_URL}/conversas/${conversationId}`, {
       method: "DELETE",
       headers: this.getHeaders(),
     });
@@ -296,7 +296,7 @@ class ApiService {
   }
 
   async postConversation(otherUserId) {
-    const r = await fetch(`${API_BASE}/conversas`, {
+    const r = await fetch(`${API_URL}/conversas`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({ otherUserId }),
@@ -305,7 +305,7 @@ class ApiService {
   }
 
   async createGroup(name, participants = [], profileImageId = null) {
-    const r = await fetch(`${API_BASE}/conversas`, {
+    const r = await fetch(`${API_URL}/conversas`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({
@@ -327,7 +327,7 @@ class ApiService {
       const token = localStorage.getItem("token");
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      const r = await fetch(`${API_BASE}/uploads/group-profile`, {
+      const r = await fetch(`${API_URL}/uploads/group-profile`, {
         method: "POST",
         headers,
         body: form,
@@ -344,7 +344,7 @@ class ApiService {
     if (!userId) return { success: false, error: "Usuário não autenticado" };
 
     const r = await fetch(
-      `${API_BASE}/usuarios/${userId}/contatos/busca?q=${encodeURIComponent(
+      `${API_URL}/usuarios/${userId}/contatos/busca?q=${encodeURIComponent(
         searchTerm
       )}&limit=${limit}`,
       { headers: this.getHeaders() }
@@ -354,7 +354,7 @@ class ApiService {
 
   async searchContacts(searchTerm, limit = 20) {
     const r = await fetch(
-      `${API_BASE}/usuarios/busca?q=${encodeURIComponent(
+      `${API_URL}/usuarios/busca?q=${encodeURIComponent(
         searchTerm
       )}&limit=${limit}`,
       { headers: this.getHeaders() }
@@ -364,7 +364,7 @@ class ApiService {
 
   async searchUsers(query, limit = 20) {
     const r = await fetch(
-      `${API_BASE}/usuarios/busca?q=${encodeURIComponent(
+      `${API_URL}/usuarios/busca?q=${encodeURIComponent(
         query
       )}&limit=${limit}`,
       { headers: this.getHeaders() }
@@ -374,7 +374,7 @@ class ApiService {
 
   async searchUsersByEmail(email, limit = 20) {
     const r = await fetch(
-      `${API_BASE}/usuarios/busca?email=${encodeURIComponent(
+      `${API_URL}/usuarios/busca?email=${encodeURIComponent(
         email
       )}&limit=${limit}`,
       { headers: this.getHeaders() }
@@ -415,7 +415,7 @@ class ApiService {
       const token = localStorage.getItem("token");
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      const r = await fetch(`${API_BASE}/uploads`, {
+      const r = await fetch(`${API_URL}/uploads`, {
         method: "POST",
         headers,
         body: form,
@@ -462,7 +462,7 @@ class ApiService {
       attachments: [attachment],
     };
 
-    const r = await fetch(`${API_BASE}/mensagens`, {
+    const r = await fetch(`${API_URL}/mensagens`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify(body),
