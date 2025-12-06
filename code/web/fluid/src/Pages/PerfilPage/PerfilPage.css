@@ -1,0 +1,83 @@
+/* ===== Responsividade PerfilPage ===== */
+
+button{
+    cursor: pointer;
+}
+
+.perfil-card{ width:100%; max-width:980px; text-align:left; }
+
+.perfil-grid{
+  display:grid;
+  grid-template-columns: 340px 1fr;
+  gap:18px;
+  margin-top:12px;
+}
+
+/* Avatar box e imagem */
+.perfil-avatar-box{
+  border:1px solid rgba(136,146,255,.35);
+  border-radius:12px;
+  height:240px;
+  display:grid;
+  place-items:center;
+  background:rgba(15,20,48,.25);
+  margin-bottom:16px;
+}
+.perfil-avatar{
+  width:160px; height:160px;
+  border-radius:16px; object-fit:cover;
+  border:1px solid rgba(136,146,255,.35);
+}
+
+.perfil-row{ display:flex; gap:8px; flex-wrap:wrap; }
+.perfil-status{ margin-top:18px; }
+.perfil-right{ display:grid; gap:18px; }
+.perfil-box{
+  border:1px solid rgba(136,146,255,.35);
+  border-radius:12px;
+  padding:18px 16px;
+  background:rgba(15,20,48,.25);
+}
+.perfil-desc{ min-height:120px; }
+.perfil-label{ margin-bottom:6px; }
+.perfil-value{ font-weight:700; }
+
+.perfil-actions-center{ display:flex; justify-content:center; }
+.perfil-section{
+  border-radius:12px;
+  border:1px solid rgba(136,146,255,.18);
+  background:rgba(15,20,48,.25);
+  padding:14px; margin-top:18px;
+}
+.perfil-between{ display:flex; align-items:center; justify-content:space-between; }
+.perfil-h2{ margin:0; font-size:18px; }
+.perfil-select{
+  width:100%; padding:12px 14px; border-radius:12px;
+  border:1px solid rgba(120,130,255,.35);
+  background:rgba(15,20,48,.35); color:var(--ink);
+}
+.perfil-modal-actions{
+  display:flex; justify-content:space-between; gap:8px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 860px){
+  .perfil-grid{ grid-template-columns: 1fr; gap:14px; }
+  .perfil-avatar-box{ height:200px; }
+  .perfil-avatar{ width:120px; height:120px; border-radius:12px; }
+  .perfil-actions-center{ justify-content:stretch; }
+  .perfil-btn-mobile{ width:100%; } /* botões ocupam largura total */
+  .perfil-row{ gap:8px; }
+  .perfil-card{ padding:28px 20px; }
+}
+
+/* telefones pequenos */
+@media (max-width: 380px){
+  .perfil-avatar-box{ height:180px; }
+  .perfil-avatar{ width:100px; height:100px; }
+}
+
+/* Botão do header da seção vira largura total no mobile */
+@media (max-width: 860px){
+  .perfil-right .perfil-btn-mobile{ width: 100%; }
+}

@@ -1,0 +1,118 @@
+:root{
+  --bg:#0b0f1a; --bg2:#0f1430; --ink:#e9ecff; --muted:#b9c0ff;
+  --primary:#6c63ff; --primary-2:#8a2be2; --accent:#2dd4ff;
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Inter',system-ui,Segoe UI,Roboto,Ubuntu,Helvetica,Arial;
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--bg),var(--bg2));
+}
+.container{min-height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:32px}
+
+/* CARD */
+.card{
+  position:relative;
+  width:100%;max-width:520px;
+  padding:36px 28px 28px;
+  border-radius:20px;border:1px solid rgba(136,146,255,.18);
+  background:linear-gradient(180deg,rgba(108,99,255,.06),rgba(42,33,102,.08));
+  backdrop-filter:blur(12px); box-shadow:0 20px 60px rgba(0,0,0,.45);
+  text-align:center;
+}
+
+/* VOLTAR */
+.back{
+  position:absolute;top:16px;left:16px;
+  color:#9bb0ff;text-decoration:none;
+  font-size:.95rem;display:inline-flex;align-items:center;gap:4px;
+  transition:color .2s ease
+}
+.back:hover{color:#cbd5ff}
+
+/* LOGO e títulos */
+.logo{
+  width:40%;max-width:200px;height:auto;object-fit:contain;
+  margin:20px auto 12px;
+  filter:drop-shadow(0 6px 24px rgba(138,43,226,.35));
+}
+h1{
+  margin:8px 0 6px;font-size:32px;letter-spacing:.08em;text-transform:uppercase;
+  background:linear-gradient(90deg,#7c3aed 0%,#3b82f6 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.tagline{margin:0 0 12px;color:var(--muted)}
+
+/* FORM */
+.form{display:grid;gap:14px;margin-top:8px;text-align:left}
+.field span{display:block;margin-bottom:6px;color:#c9d1ff}
+
+/* ===== INPUT + OLHO ===== */
+.field .input-wrap{
+  position: relative;
+  display: block;
+  overflow: visible;
+}
+.field .input-wrap input{
+  width: 100%;
+  height: 46px;
+  padding: 12px 56px 12px 14px;         /* reserva espaço p/ o olho */
+  border-radius: 12px;
+  border: 1px solid rgba(120,130,255,.35);
+  background: rgba(15,20,48,.35);
+  color: var(--ink);
+  line-height: 1.2;
+}
+.field .input-wrap .togglePwd{
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  padding: 0; border: 0; background: transparent;
+  color: #9bb0ff; border-radius: 8px; cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+.field .input-wrap .togglePwd:hover{
+  background: rgba(120,130,255,.15);
+  color: #cbd5ff;
+}
+/* SVG base: por padrão nenhum aparece */
+.field .input-wrap .togglePwd .eye{
+  width: 22px; height: 22px;
+  display: none; overflow: visible;
+}
+/* estado controlado por data-atributo */
+.field .input-wrap .togglePwd[data-state="hidden"] .eye.closed{ display:block; }
+.field .input-wrap .togglePwd[data-state="visible"] .eye.open{ display:block; }
+
+/* inputs normais + textos */
+.field input{
+  width:400px !important;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(120,130,255,.35);
+  background:rgba(15,20,48,.35);
+  color:var(--ink);
+}
+.link{background:none;border:none;color:#9bb0ff;cursor:pointer;padding:6px 8px;border-radius:8px;font-size:.9rem}
+.link:hover{background:rgba(120,130,255,.18)}
+.check{display:flex;align-items:center;gap:8px;color:#cbd3ff}
+
+/* BOTÕES */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:700;
+  transition:transform .15s ease, box-shadow .2s ease;
+}
+.btn.primary{
+  background:linear-gradient(90deg,#7c3aed 0%,#3b82f6 100%);
+  color:white;box-shadow:0 8px 30px rgba(90,60,255,.45);
+}
+.btn.primary:hover{transform:translateY(-1px);box-shadow:0 12px 36px rgba(90,60,255,.55)}
+.block{width:100%}
+
+.muted{color:#9aa3ffb3}
+.small{font-size:.92rem}

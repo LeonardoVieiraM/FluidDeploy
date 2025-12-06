@@ -1,0 +1,296 @@
+/* ===== VARIÁVEIS GLOBAIS E ESTILOS BASE ===== */
+:root {
+  /* Esquema de cor padrão (Azul) */
+  --bg: #0b0f2a;
+  --panel: #0e1435;
+  --panel-2: #0c1230;
+  --stroke: #8ea0ff;
+  --stroke-strong: #7c86ff;
+  --glow: 0 0 0 1px var(--stroke-strong), 0 0 24px rgba(124, 134, 255, 0.25);
+  --text: #d8e4ff;
+  --muted: #a9b8ee;
+  --radius: 16px;
+  --text-contrast: var(--text);
+  
+  /* Cores de estado */
+  --success: #4CAF50;
+  --error: #ff6b6b;
+  --warning: #ff9800;
+  --info: #2196F3;
+}
+
+/* ===== RESET E ESTILOS BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+/* ===== TIPOGRAFIA ===== */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 { font-size: 34px; }
+h2 { font-size: 24px; }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; }
+
+/* ===== COMPONENTES COMUNS ===== */
+
+/* Botões */
+.btn {
+  background: transparent;
+  border: 1.4px solid var(--stroke-strong);
+  border-radius: 8px;
+  color: var(--stroke-strong);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  font-size: 14px;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--stroke-strong) 20%, transparent);
+}
+
+.btn.primary {
+  background: var(--stroke-strong);
+  color: var(--bg);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled:hover {
+  box-shadow: none;
+  border-color: var(--stroke);
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: var(--radius);
+  border: 1.6px solid var(--stroke-strong);
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  box-shadow: var(--glow);
+}
+
+.input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* Cards e Painéis */
+.card {
+  background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+  border: 1.6px solid var(--stroke-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--glow);
+  padding: 24px;
+}
+
+.panel {
+  background: var(--panel);
+  border-radius: var(--radius);
+  border: 1.4px solid color-mix(in srgb, var(--stroke-strong) 30%, transparent);
+}
+
+/* Modal e Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  background: var(--panel);
+  border-radius: var(--radius);
+  border: 1.6px solid var(--stroke-strong);
+  box-shadow: var(--glow);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+/* Estados de loading e vazio */
+.loading, .empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  font-style: italic;
+}
+
+/* Mensagens de erro */
+.error-message {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  color: var(--error);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--error);
+  color: white;
+  border-radius: 8px;
+  margin: 16px;
+  animation: slideIn 0.3s ease;
+}
+
+/* Avatar */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-img {
+  border-radius: 50%;
+  object-fit: cover;
+  display: inline-block;
+}
+
+.avatar-small {
+  width: 36px;
+  height: 36px;
+}
+
+.avatar-medium {
+  width: 48px;
+  height: 48px;
+}
+
+.avatar-large {
+  width: 92px;
+  height: 92px;
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 980px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 28px; }
+  h2 { font-size: 22px; }
+  
+  .card {
+    padding: 20px;
+  }
+  
+  .btn {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 16px;
+  }
+  
+  h1 { font-size: 24px; }
+  h2 { font-size: 20px; }
+}
+
+
+/* ===== MENSAGENS ===== */
+.message-text, .contact-name, .list-name, .perfil-value {
+  color: var(--text) !important;
+}
+
+/* Ajustes específicos para mensagens recebidas */
+.received-bubble {
+  background: color-mix(in srgb, var(--panel) 95%, white 5%) !important;
+  color: var(--text) !important;
+}

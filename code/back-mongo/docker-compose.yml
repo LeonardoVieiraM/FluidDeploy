@@ -1,0 +1,20 @@
+services:
+  libretranslate:
+    image: libretranslate/libretranslate
+    container_name: libretranslate
+    ports:
+      - "5000:5000"
+    environment:
+      - LT_UPDATE_MODELS=true
+      - LT_LOAD_ONLY=pt,en,es,fr,de,it,ja,ko,zh,ru,ar,hi
+      - LT_THREADS=4
+      - LT_DEFAULT_RATE_LIMIT=20
+      - LT_API_KEYS=false
+      - LT_REQUIRE_API_KEY_SECRET=123456
+    volumes:
+      - libretranslate_data:/home/libretranslate/.local
+    restart: unless-stopped
+    mem_limit: 4g
+
+volumes:
+  libretranslate_data:
